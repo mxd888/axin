@@ -1,0 +1,10 @@
+上传项目
+mvn deploy -P release
+
+https://s01.oss.sonatype.org/
+
+MDong
+@Mi15511090450
+
+gpg秘钥密码
+@Mi19191919

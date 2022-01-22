@@ -1,0 +1,12 @@
+FROM java:8
+MAINTAINER mxd
+ADD axin-0.0.1-SNAPSHOT.jar axin.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","axin.jar"]
+
+
+FROM java:8
+MAINTAINER mxd
+ADD t-im-server-demo-2.1.7.v20220120-RELEASE-jar-with-dependencies.jar t-im-server.jar
+EXPOSE 8888
+ENTRYPOINT ["java","-jar","t-im-server.jar"]

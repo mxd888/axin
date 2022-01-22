@@ -1,0 +1,50 @@
+安装docker
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+vim /etc/docker/daemon.json
+{
+  "registry-mirrors": ["http://hub-mirror.c.163.com"]
+}
+systemctl daemon-reload
+systemctl start docker
+安装Nginx
+docker pull nginx:latest
+先创建文件夹
+         /mydata/nginx/conf/
+         /mydata/nginx/html
+         /mydata/nginx/log
+         /mydata/nginx/conf/cert
+// 启动Nginx
+docker run -d -p 443:443 -p 80:80 --name nginx --privileged=true -v /mydata/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /mydata/nginx/html:/etc/nginx/html -v /mydata/nginx/log:/var/log/nginx -v /mydata/nginx/cert:/etc/nginx/cert  nginx
+安装mysql 8
+docker pull mysql:8.0.18
+docker run -itd --name mysql-test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql:8.0.18
+安装redis
+docker pull redis:latest
+docker run -itd --name redis-test -p 6379:6379 redis
+安装完成
+调整mysql可以外部访问
+docker进入某个容器
+docker exec -it mysql-test bash
+mysql -u root -p
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+完成
+编译ax docker文件
+docker build -t wechat .
+docker run -itd --name wechat -p 8080:8080 wechat
+
+nohup java -jar t-im-server-demo-2.1.7.v20220120-RELEASE-jar-with-dependencies.jar &
+
+// maven编译带有依赖的jar包
+mvn assembly:assembly
+
+
+// srs	--> 记得 webrtc http与1985对应，https与1990对应
+RTMP listen at tcp://0.0.0.0:1935
+HTTP-API listen at tcp://0.0.0.0:1985
+HTTPS-API listen at tcp://0.0.0.0:1990
+HTTP-Server listen at tcp://0.0.0.0:8080			->8082
+HTTPS-Server listen at tcp://0.0.0.0:8088
+
+docker run --rm -itd -p 1935:1935 -p 1985:1985 -p 8082:8080 -p 1990:1990 -p 8088:8088 \
+    --env CANDIDATE=81.70.149.16 -p 8000:8000/udp \
+    registry.cn-hangzhou.aliyuncs.com/ossrs/srs:4 ./objs/srs -c conf/https.docker.conf
